@@ -56,8 +56,7 @@ action_spaces = env.unwrapped.action_spaces
 observation_spaces = env.unwrapped.observation_spaces
 
 agents = env.agents
-# print(str(action_space))
-print(agents)
+
 
 for name, module in list(all_environments.items()):
   try:
@@ -76,6 +75,8 @@ for name, module in list(all_environments.items()):
     observation_spaces = env.unwrapped.observation_spaces
 
     agents = env.agents
+
+    manual_control = "has_manual_policy" in env.metadata and env.metadata["has_manual_policy"]
 
     docstring = env.__doc__
     
@@ -98,11 +99,13 @@ for name, module in list(all_environments.items()):
     | Observation Spaces | {observation_spaces} |
     | Parallel API | {parallel_api} |
     | Agents | {agents} |
+    | Manual Control | {manual_control} |
     
     """
-
+    print(string)
+    # exit()
   except Exception as e:
-    print(e)
+    print("ER")
 
 # ['Scenario', 'SimpleEnv', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'env', 'make_env', 'parallel_env', 'parallel_wrapper_fn', 'raw_env']
 
