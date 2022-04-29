@@ -11,7 +11,7 @@ import re
 sys.path.append("..")
 sys.path.append("../..")
 
-dirs = ["atari"]
+dirs = ["atari", "butterfly", "classic", "magent", "mpe", "sisl"]
 
 def get_python_file_name(env_type, env_name):
     dir_path = os.path.join("../..", "pettingzoo")
@@ -27,7 +27,7 @@ def insert_docstring_into_python_file(file_path, doc):
     with open(file_path,'r+') as file:
         file_text = file.read()
 
-        file_text = f'"""\n{doc}"""\n\n' + file_text
+        file_text = f'"""\n{doc}\n"""\n\n' + file_text
         file.seek(0)
         file.write(file_text)
 
