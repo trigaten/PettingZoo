@@ -1,15 +1,10 @@
 import math
-import warnings
 
 import magent
 import numpy as np
-from gym.spaces import Box, Discrete
 from gym.utils import EzPickle
 
-from pettingzoo import AECEnv
-from pettingzoo.magent.render import Renderer
-from pettingzoo.utils import agent_selector
-from pettingzoo.utils.conversions import parallel_to_aec_wrapper, parallel_wrapper_fn
+from pettingzoo.utils.conversions import parallel_to_aec_wrapper
 
 from .magent_env import magent_parallel_env, make_env
 
@@ -67,9 +62,9 @@ def get_config(map_size, minimap_mode, step_reward, dead_penalty, attack_penalty
 
 class _parallel_env(magent_parallel_env, EzPickle):
     metadata = {
-        "render.modes": ["human", "rgb_array"],
+        "render_modes": ["human", "rgb_array"],
         'name': "battle_v3",
-        "video.frames_per_second": 5,
+        "render_fps": 5,
     }
 
     def __init__(self, map_size, minimap_mode, reward_args, max_cycles, extra_features):
@@ -89,8 +84,6 @@ class _parallel_env(magent_parallel_env, EzPickle):
         width = height = map_size
         init_num = map_size * map_size * 0.04
         gap = 3
-
-        self.leftID, self.rightID = self.rightID, self.leftID
 
         # left
         n = init_num

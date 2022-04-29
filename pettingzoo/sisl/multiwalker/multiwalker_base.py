@@ -265,8 +265,8 @@ class BipedalWalker(Agent):
 
 class MultiWalkerEnv():
 
-    metadata = {'render.modes': [
-        'human', 'rgb_array'], 'video.frames_per_second': FPS}
+    metadata = {'render_modes': [
+        'human', 'rgb_array'], 'render_fps': FPS}
 
     hardcore = False
 
@@ -445,22 +445,24 @@ class MultiWalkerEnv():
             WALKER_SEPERATION * TERRAIN_STEP
 
         done = [False] * self.n_walkers
-        if self.game_over or self.package.position.x < 0:
-            rewards += self.terminate_reward
-            done = [True] * self.n_walkers
-        if self.package.position.x > (self.terrain_length - TERRAIN_GRASS) * TERRAIN_STEP:
-            done = [True] * self.n_walkers
-        rewards += self.fall_reward * self.fallen_walkers
-        if self.terminate_on_fall and np.sum(self.fallen_walkers) > 0:
-            rewards += self.terminate_reward
-            done = [True] * self.n_walkers
         for i, (fallen, walker) in enumerate(zip(self.fallen_walkers, self.walkers)):
             if fallen:
-                if not done[i]:
-                    rewards[i] += self.terminate_reward
+                rewards[i] += self.fall_reward
                 if self.remove_on_fall:
                     walker._destroy()
                 done[i] = True
+        if (
+            (self.terminate_on_fall and np.sum(self.fallen_walkers) > 0)
+            or self.game_over
+            or self.package.position.x < 0
+        ):
+            rewards += self.terminate_reward
+            done = [True] * self.n_walkers
+        elif (
+            self.package.position.x
+            > (self.terrain_length - TERRAIN_GRASS) * TERRAIN_STEP
+        ):
+            done = [True] * self.n_walkers
 
         return rewards, done, obs
 
