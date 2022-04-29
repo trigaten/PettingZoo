@@ -62,7 +62,7 @@ if __name__ == "__main__":
     manual_policy = knights_archers_zombies_v10.ManualPolicy(env)
 
     for agent in env.agent_iter():
-        clock.tick(env.metadata["video.frames_per_second"])
+        clock.tick(env.metadata["render_fps"])
 
         observation, reward, done, info = env.last()
 

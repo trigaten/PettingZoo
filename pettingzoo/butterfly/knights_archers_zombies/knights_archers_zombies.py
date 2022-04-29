@@ -12,7 +12,6 @@ from pettingzoo import AECEnv
 from pettingzoo.utils import agent_selector, wrappers
 from pettingzoo.utils.conversions import parallel_wrapper_fn
 
-from .manual_control import manual_control
 from .manual_policy import ManualPolicy
 from .src import constants as const
 from .src.img import get_image
@@ -40,6 +39,7 @@ class raw_env(AECEnv, EzPickle):
         "name": "knights_archers_zombies_v10",
         "is_parallelizable": True,
         "render_fps": const.FPS,
+        "has_manual_policy": True,
     }
 
     def __init__(
@@ -691,7 +691,9 @@ class raw_env(AECEnv, EzPickle):
         self.draw()
         self.frames = 0
 
-    def reset(self):
+    def reset(self, seed=None):
+        if seed is not None:
+            self.seed(seed=seed)
         self.has_reset = True
         self.agents = self.possible_agents
         self._agent_selector.reinit(self.agents)
