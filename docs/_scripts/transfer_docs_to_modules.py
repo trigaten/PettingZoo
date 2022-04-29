@@ -11,16 +11,18 @@ import re
 sys.path.append("..")
 sys.path.append("../..")
 
-dirs = ["atari", "butterfly", "classic", "magent", "mpe", "sisl"]
+dirs = ["butterfly", "classic", "magent", "mpe", "sisl"]
 
 def get_python_file_name(env_type, env_name):
     dir_path = os.path.join("../..", "pettingzoo")
     for env_file in os.listdir(os.path.join(dir_path, env_type)):
-        if env_file[-3:] == ".py":
-            with open((os.path.join(dir_path, env_type, env_file)),'r') as file:
+        if env_file == env_name:
+            with open((os.path.join(dir_path, env_type, env_file, env_file + ".py")),'r') as file:
                 if env_name in file.name:
-                    return file.name
-
+                    print(file.name)
+                    # return file.name
+    exit()
+    
 def insert_docstring_into_python_file(file_path, doc):
     # doc = remove_front_matter(doc)
     doc = remove_html(doc)
