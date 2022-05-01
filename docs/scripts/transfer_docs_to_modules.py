@@ -4,7 +4,7 @@ This script reads documentation from /docs and puts it into zoo python files
 
 __author__ = "Sander Schulhoff"
 __email__ = "sanderschulhoff@gmail.com"
-
+print("JJJ")
 import sys
 import os
 import re
@@ -19,9 +19,7 @@ def get_python_file_name(env_type, env_name):
         if env_file == env_name:
             with open((os.path.join(dir_path, env_type, env_file, env_file + ".py")),'r') as file:
                 if env_name in file.name:
-                    print(file.name)
-                    # return file.name
-    exit()
+                    return file.name
     
 def insert_docstring_into_python_file(file_path, doc):
     # doc = remove_front_matter(doc)
@@ -43,18 +41,18 @@ def remove_html(string):
     splits = string.split("</div>")
     return splits[-2].strip()
 
-for env_type in dirs:
-    dir_path = "../" + env_type
-    for env_name in os.listdir(dir_path):
-        if str(env_name)[-3:] == ".md":
-            with open((os.path.join(dir_path, env_name)),'r') as file:
-                python_file_name = get_python_file_name(env_type, env_name[:-3])
-                # print(remove_html(file.read()))
-                # print(file.read())
-                # print("-0-0-0-0-0-0-0")
-                # exit()
-                insert_docstring_into_python_file(python_file_name, file.read())
-
+# for env_type in dirs:
+#     dir_path = "../../pettingzoo/" + env_type
+#     for env_name in os.listdir(dir_path):
+#         if str(env_name)[-3:] == ".md":
+#             with open((os.path.join(dir_path, env_name)),'r') as file:
+#                 python_file_name = get_python_file_name(env_type, env_name[:-3])
+#                 # print(remove_html(file.read()))
+#                 # print(file.read())
+#                 # print("-0-0-0-0-0-0-0")
+#                 # exit()
+#                 insert_docstring_into_python_file(python_file_name, file.read())
+os.listdir("")
 # if __name__ == "__main__":
 #     file = get_python_file("butterfly", "prison")
 
