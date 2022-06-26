@@ -76,7 +76,7 @@ for name, module in list(all_environments.items()):
 
     agents = env.agents
 
-    manual_control = "has_manual_policy" in env.metadata and env.metadata["has_manual_policy"]
+    manual_policy = "has_manual_policy" in env.metadata and env.metadata["has_manual_policy"]
 
     docstring = env.__doc__
     
@@ -99,13 +99,14 @@ for name, module in list(all_environments.items()):
     | Observation Spaces | {observation_spaces} |
     | Parallel API | {parallel_api} |
     | Agents | {agents} |
-    | Manual Control | {manual_control} |
+    | Manual Control | {manual_policy} |
     
     """
-    print(string)
+    if manual_policy:
+      print(string)
     # exit()
   except Exception as e:
-    print("ER")
+    print(e)
 
 # ['Scenario', 'SimpleEnv', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'env', 'make_env', 'parallel_env', 'parallel_wrapper_fn', 'raw_env']
 
